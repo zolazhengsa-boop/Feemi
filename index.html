@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no" />
+  <meta name="theme-color" content="#070A12" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Feemi" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="apple-touch-icon" href="icon-192.png" />
+  <title>Feemi</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<div class="app">
+  <header class="topbar">
+    <button class="round" data-go="me">☰</button>
+    <div>
+      <h1 id="title">Feemi</h1>
+      <p id="subtitle">Spend on what matters.</p>
+    </div>
+    <button class="round plus" id="addTop">＋</button>
+  </header>
+
+  <main>
+    <section class="screen active" id="home">
+      <section class="account-card">
+        <div class="hello">晚上好，臻真 🌙</div>
+        <p>这个月，你花在成为更好的自己上：</p>
+        <strong id="monthly">£0.00</strong>
+        <div class="account-meta">
+          <span id="yearly">年度 £0.00</span>
+          <span id="annualCount">0 个年付</span>
+        </div>
+      </section>
+
+      <section class="daily-card" data-go="tips">
+        <span id="dailyApp">✨ Feebi Daily</span>
+        <h2 id="dailyTitle">今天先别急着取消。</h2>
+        <p id="dailyText">钱已经花了，我先帮你把它用得像样一点。</p>
+        <button>查看今日 Tip</button>
+      </section>
+
+      <section class="score-card">
+        <div>
+          <span>Subscription Score</span>
+          <strong id="score">84</strong>
+          <p id="scoreLine">优秀 · 你正在慢慢拿回主动权。</p>
+        </div>
+        <div class="ring"><span id="scoreSmall">84</span></div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head">
+          <h2>即将扣费</h2>
+          <button data-go="bills">全部</button>
+        </div>
+        <div id="upcoming"></div>
+      </section>
+    </section>
+
+    <section class="screen" id="bills">
+      <input class="search" id="search" placeholder="搜索订阅，例如 ChatGPT / WiFi" />
+      <div class="chips">
+        <button class="chip active" data-filter="全部">全部</button>
+        <button class="chip" data-filter="AI工具">AI</button>
+        <button class="chip" data-filter="生活服务">生活</button>
+        <button class="chip" data-filter="娱乐影音">娱乐</button>
+        <button class="chip" data-filter="金融理财">金融</button>
+      </div>
+      <div class="list" id="billList"></div>
+    </section>
+
+    <section class="screen" id="tips">
+      <section class="tips-hero">
+        <span>✨ Unlock</span>
+        <h2>每天 1 个新发现</h2>
+        <p>不堆文字。先看一句，感兴趣再展开。</p>
+      </section>
+
+      <div class="tip-stack" id="tipStack"></div>
+
+      <section class="panel">
+        <div class="panel-head">
+          <h2>我的 Secrets</h2>
+          <button id="clearSaved">清空</button>
+        </div>
+        <div id="savedSecrets"></div>
+      </section>
+    </section>
+
+    <section class="screen" id="feebi">
+      <section class="feebi-hero">
+        <div class="feebi-avatar">💜</div>
+        <h2>我少说废话。</h2>
+        <p id="memoryLine">你花出去的钱，我会帮你判断：是投资，还是只是安慰剂。</p>
+      </section>
+
+      <div class="quick-grid">
+        <button data-question="我是不是订阅太多了？">我是不是订阅太多了？</button>
+        <button data-question="哪个订阅最值得取消？">哪个最值得取消？</button>
+        <button data-question="ChatGPT怎么用最值？">ChatGPT怎么用最值？</button>
+        <button data-question="我最近有点订阅焦虑">我有点焦虑</button>
+      </div>
+
+      <div class="chat" id="chat">
+        <div class="bubble ai">有些订阅是消费，有些是投资。我的工作，就是帮你分清楚。👀</div>
+      </div>
+
+      <div class="composer">
+        <input id="message" placeholder="和 Feebi 聊聊..." />
+        <button id="send">发送</button>
+      </div>
+    </section>
+
+    <section class="screen" id="insights">
+      <section class="panel">
+        <h2>📈 洞察</h2>
+        <p id="insightSummary">这里会显示月付、年付折算后的真实订阅结构。</p>
+      </section>
+      <div id="bars"></div>
+      <section class="panel">
+        <h2>Feebi understands you</h2>
+        <p class="soft" id="understandText">你不是喜欢买软件。你只是一直相信，下一个工具会让自己变得更好。</p>
+      </section>
+    </section>
+
+    <section class="screen" id="me">
+      <section class="panel">
+        <h2>👤 关于我</h2>
+        <label>最喜欢的订阅<input id="fav" placeholder="例如 ChatGPT" /></label>
+        <label>我的担忧<input id="worry" placeholder="例如 突然扣费、消费失控" /></label>
+        <label>我的消费习惯<input id="habit" placeholder="例如 喜欢尝鲜、舍不得取消" /></label>
+        <label>我的目标<input id="goal" placeholder="例如 减少浪费，提高健康分" /></label>
+        <button class="wide" id="saveMemory">让 Feebi 记住</button>
+      </section>
+      <section class="panel">
+        <h2>数据</h2>
+        <button class="wide secondary" id="exportData">导出备份</button>
+        <button class="wide danger" id="resetData">恢复示例</button>
+      </section>
+    </section>
+  </main>
+
+  <nav class="tabbar">
+    <button class="tab active" data-go="home"><span>◔</span>账户</button>
+    <button class="tab" data-go="bills"><span>☷</span>账单</button>
+    <button class="big" id="addBottom">＋</button>
+    <button class="tab" data-go="tips"><span>✦</span>Tips</button>
+    <button class="tab" data-go="feebi"><span>💜</span>Feebi</button>
+  </nav>
+</div>
+
+<div class="sheet hidden" id="sheet">
+  <div class="sheet-card">
+    <div class="handle"></div>
+    <div class="sheet-head">
+      <h2 id="sheetTitle">添加订阅</h2>
+      <button id="close">×</button>
+    </div>
+    <label>名称<input id="subName" placeholder="例如 ChatGPT Plus" /></label>
+    <div class="two">
+      <label>金额<input id="subPrice" type="number" step="0.01" /></label>
+      <label>货币<select id="subCurrency"><option>£</option><option>$</option><option>€</option><option>¥</option></select></label>
+    </div>
+    <div class="two">
+      <label>计费周期<select id="subCycle"><option value="monthly">每月</option><option value="annual">每年</option></select></label>
+      <label>扣费日<input id="subDay" type="number" min="1" max="31" placeholder="26" /></label>
+    </div>
+    <div class="two">
+      <label>扣费月份<select id="subMonth"><option value="">月付无需选</option><option value="1">1月</option><option value="2">2月</option><option value="3">3月</option><option value="4">4月</option><option value="5">5月</option><option value="6">6月</option><option value="7">7月</option><option value="8">8月</option><option value="9">9月</option><option value="10">10月</option><option value="11">11月</option><option value="12">12月</option></select></label>
+      <label>分类<select id="subCat"><option>AI工具</option><option>生活服务</option><option>娱乐影音</option><option>金融理财</option></select></label>
+    </div>
+    <label>状态<select id="subStatus"><option>使用中</option><option>准备取消</option><option>已暂停</option><option>已取消</option></select></label>
+    <label>备注<input id="subNote" placeholder="取消入口、使用频率等" /></label>
+    <div class="sheet-actions">
+      <button class="delete" id="deleteSub">删除</button>
+      <button class="save" id="saveSub">保存</button>
+    </div>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
